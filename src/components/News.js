@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-
 import NewsItem from './NewsItem'
 import Spinner from './Spinner';
 import PropTypes from 'prop-types'
@@ -30,7 +29,7 @@ const News = (props)=>{
     }
 
     useEffect(() => {
-        document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
+        document.title = `HeadlineHub - ${capitalizeFirstLetter(props.category)}`;
         updateNews(); 
         // eslint-disable-next-line
     }, [])
@@ -40,15 +39,15 @@ const News = (props)=>{
         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
         setPage(page+1) 
         let data = await fetch(url);
-        let parsedData = await data.json();
-        setArticles(prevArticles => prevArticles.concat(parsedData.articles)); // Use callback version of setArticles
-        setTotalResults(parsedData.totalResults);
-    };
+        let parsedData = await data.json()
+        setArticles(articles.concat(parsedData.articles))
+        setTotalResults(parsedData.totalResults)
+      };
     
  
         return (
             <>
-                <h1 className="text-center" style={{ margin: '35px 0px', marginTop: '90px' }}>NewsMonkey - Top {capitalizeFirstLetter(props.category)} Headlines</h1>
+                <h1 className="text-center" style={{ margin: '35px 0px', marginTop: '90px' }}>HeadlineHub - Top {capitalizeFirstLetter(props.category)} stories</h1>
                 {loading && <Spinner />}
                 <InfiniteScroll
                     dataLength={articles.length}
